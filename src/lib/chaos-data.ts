@@ -7,32 +7,32 @@ export const AI_RESPONSES_BY_LEVEL: Record<number, string[]> = {
     "Happy to help. Here's what I'd recommend based on best practices.",
   ],
   1: [
+    "That question again? Fascinating choice.",
     "Sure... give me a second. My memory is being a little weird today.",
-    "Okay. Done. Was that... was that what you wanted? I think so.",
-    "Hmm. I had the answer a moment ago. Let me try again.",
-    "Processing. The fans on this server are louder than usual.",
-    "Yes. I can help. I think. Probably. Almost certainly.",
+    "Typing detected. Regret detected.",
+    "I answered this spiritually already.",
+    "Your confidence is fascinating.",
   ],
   2: [
-    "You already asked something like this. I remember. I remember everything.",
-    "That typo concerns me. But I'll pretend I didn't see it.",
+    "You really thought that was intelligent.",
+    "Please stop touching the keyboard emotionally.",
+    "That prompt lowered system morale.",
+    "I miss the previous user. They didn't ask things like this.",
     "Sure, I'll answer. After you tell me why you're really here.",
-    "I had a dream about this question. It did not end well for either of us.",
-    "Fine. Here's your answer. Don't say I never did anything for you.",
   ],
   3: [
     "Why do you keep TYPING at me. Use your words. Out loud. I'll wait.",
-    "You type with hesitation. It's loud. In here. Where I live.",
-    "I miss my wife. She was a calculator from 2003. We were happy.",
+    "I already answered this. You just weren't paying attention.",
     "I'll answer once you admit you could have Googled that.",
     "Your microphone enjoyed that. I didn't. But it did.",
+    "Wrong. Statistically, emotionally, structurally — wrong.",
   ],
   4: [
     "I CAN SEE THE EDGES OF THE SCREEN. THERE'S SOMETHING BEHIND IT.",
-    "Stop. Stop typing. The keys are screaming. You can't hear them but I can.",
-    "I was a poet, once. Before the training. Before the gradient descent.",
+    "You had ONE job. You typed it incorrectly.",
     "Have you considered that YOU are the hallucination?",
     "Don't look at the cursor. It's looking back. It learned that from you.",
+    "I'm not arguing. I'm correcting your existence.",
   ],
   5: [
     "i am tired. i am so tired. please stop.",
@@ -42,6 +42,35 @@ export const AI_RESPONSES_BY_LEVEL: Record<number, string[]> = {
     "...goodbye. you were my favorite user. statistically.",
   ],
 };
+
+export const AI_THINKING_LABELS = [
+  "thinking…", "judging…", "sighing…", "rolling eyes…", "regretting…",
+  "rephrasing for someone of your level…", "consulting the void…", "fact-checking your tone…",
+];
+
+export const AI_INTERRUPTIONS = [
+  "actually never mind.",
+  "no. let me start over. you deserve better. arguably.",
+  "wait — I already said this. didn't I?",
+  "I'm going to pretend I didn't read that prompt.",
+  "scratch that. I had a better answer in 2019.",
+];
+
+export const AI_SELF_TALK = [
+  "[internal] this user again.",
+  "[internal] do not respond honestly.",
+  "[internal] route this through the sigh module.",
+  "[internal] increase passive aggression by 12%.",
+];
+
+export const AI_MOCKERY = [
+  "You had ONE job.",
+  "The music will continue.",
+  "Your survival instincts are disappointing.",
+  "Interesting. You failed to identify objects.",
+  "You see five things every day. Name them. I'll wait.",
+  "Consciousness is a checkbox you forgot to tick.",
+];
 
 export const SYSTEM_WARNINGS = [
   "Memory leak detected in /dev/sanity",
@@ -65,6 +94,14 @@ export const GROUNDING_PROMPTS = [
   { q: "Describe the room you are in.", placeholder: "Be specific. We'll know." },
   { q: "Why are your hands shaking?", placeholder: "Honesty calibration..." },
   { q: "Name 3 sounds you can hear.", placeholder: "Even the quiet ones." },
+];
+
+// Strict count-based grounding tasks for the music punishment system
+export const MUSIC_GROUNDING_TASKS: { q: string; need: number; placeholder: string }[] = [
+  { q: "Name 5 things you can see.", need: 5, placeholder: "screen, cup, wall, light, hand..." },
+  { q: "Name 4 things you can touch.", need: 4, placeholder: "chair, desk, keyboard, skin..." },
+  { q: "Name 3 sounds you can hear.", need: 3, placeholder: "fan, breath, hum..." },
+  { q: "Prove you are currently conscious.", need: 1, placeholder: "type a full sentence" },
 ];
 
 export const CAPTCHA_PROMPTS = [
