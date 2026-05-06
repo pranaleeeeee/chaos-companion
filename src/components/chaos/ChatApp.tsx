@@ -1,5 +1,5 @@
 import { useChaos } from "@/hooks/useChaos";
-import { AI_RESPONSES_BY_LEVEL } from "@/lib/chaos-data";
+import { AI_RESPONSES_BY_LEVEL, AI_THINKING_LABELS, AI_INTERRUPTIONS } from "@/lib/chaos-data";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Copy, MessageSquarePlus, RefreshCw, Send, Settings, Sparkles, Trash2, Mic
@@ -14,8 +14,10 @@ import { summonFace } from "./FaceApparition";
 import { triggerModal } from "./InterruptModals";
 import { ChaosMeter } from "./ChaosMeter";
 import { AudioControl } from "./AudioControl";
+import { triggerTransition } from "./PowerPointTransitions";
+import { triggerMusicPunishment } from "./MusicPunishment";
 
-type Msg = { id: string; role: "user" | "assistant"; content: string; pending?: boolean };
+type Msg = { id: string; role: "user" | "assistant"; content: string; pending?: boolean; thinking?: string };
 type Chat = { id: string; title: string; messages: Msg[] };
 
 const uid = () => Math.random().toString(36).slice(2, 9);
@@ -71,7 +73,8 @@ export const ChatApp = () => {
     const text = input.trim();
     if (!text) return;
     const userMsg: Msg = { id: uid(), role: "user", content: text };
-    const pendingMsg: Msg = { id: uid(), role: "assistant", content: "", pending: true };
+    const thinking = AI_THINKING_LABELS[Math.floor(Math.random() * AI_THINKING_LABELS.length)];
+    const pendingMsg: Msg = { id: uid(), role: "assistant", content: "", pending: true, thinking };
     updateActive((c) => ({
       ...c,
       title: c.messages.length === 0 ? text.slice(0, 28) : c.title,
@@ -81,20 +84,40 @@ export const ChatApp = () => {
     bump(chaosBoost ? 2 : 1);
     summonFace();
     blip(700);
+    if (level >= 2 && Math.random() < 0.5) triggerTransition();
 
+    const interrupt = level >= 2 && Math.random() < 0.35;
     const delay = 700 + Math.random() * 800 + level * 200;
+
     setTimeout(() => {
+      const finalText = interrupt
+        ? AI_INTERRUPTIONS[Math.floor(Math.random() * AI_INTERRUPTIONS.length)]
+        : aiReply(level + (chaosBoost ? 1 : 0));
       updateActive((c) => ({
         ...c,
         messages: c.messages.map((m) =>
-          m.id === pendingMsg.id ? { ...m, content: aiReply(level + (chaosBoost ? 1 : 0)), pending: false } : m
+          m.id === pendingMsg.id ? { ...m, content: finalText, pending: false } : m
         ),
       }));
       blip(440);
+
+      // sometimes follow-up: rewrite
+      if (interrupt) {
+        setTimeout(() => {
+          updateActive((c) => ({
+            ...c,
+            messages: c.messages.map((m) =>
+              m.id === pendingMsg.id ? { ...m, content: aiReply(level), pending: false } : m
+            ),
+          }));
+        }, 900);
+      }
     }, delay);
 
     // mic popup easter egg
     if (level === 1 && Math.random() < 0.4) setTimeout(() => triggerModal("mic"), 1200);
+    // music punishment trigger
+    if (level >= 2 && Math.random() < 0.18) setTimeout(() => triggerMusicPunishment(), 1500);
   };
 
   const handleRegenerate = () => {
