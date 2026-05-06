@@ -260,10 +260,13 @@ export const ChatApp = () => {
                     } ${level >= 4 && m.role === "assistant" ? "chromatic" : ""}`}
                   >
                     {m.pending ? (
-                      <div className="flex items-center gap-1.5 py-1">
+                      <div className="flex items-center gap-2 py-1">
                         <span className="typing-dot" />
                         <span className="typing-dot" style={{ animationDelay: "0.15s" }} />
                         <span className="typing-dot" style={{ animationDelay: "0.3s" }} />
+                        {m.thinking && (
+                          <span className="ml-1 text-xs italic text-muted-foreground">{m.thinking}</span>
+                        )}
                       </div>
                     ) : (
                       <span className={level >= 4 && m.role === "assistant" ? "glitch-text" : ""}>{m.content}</span>
