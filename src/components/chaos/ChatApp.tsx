@@ -159,10 +159,10 @@ export const ChatApp = () => {
     });
   };
 
-  // send button drift at high chaos
+  // send button drift / dodge
   const onSendHover = () => {
-    if (level >= 3) {
-      setSendOffset({ x: (Math.random() - 0.5) * 60, y: (Math.random() - 0.5) * 30 });
+    if (level >= 2) {
+      setSendOffset({ x: (Math.random() - 0.5) * (40 + level * 30), y: (Math.random() - 0.5) * (20 + level * 15) });
     }
   };
   const onSendLeave = () => setSendOffset({ x: 0, y: 0 });
@@ -340,6 +340,12 @@ export const ChatApp = () => {
             </Row>
             <Row label="Grounding check" desc="Force a mandatory grounding modal.">
               <Button size="sm" variant="outline" onClick={() => { setSettingsOpen(false); triggerModal("grounding"); }}>Run</Button>
+            </Row>
+            <Row label="Music punishment" desc="You won't enjoy this.">
+              <Button size="sm" variant="outline" onClick={() => { setSettingsOpen(false); triggerMusicPunishment(); }}>Play</Button>
+            </Row>
+            <Row label="Random transition" desc="Cursed PowerPoint moment.">
+              <Button size="sm" variant="outline" onClick={() => { setSettingsOpen(false); triggerTransition(); }}>Wipe</Button>
             </Row>
             <Row label="Reset session" desc="Wipe history and sanity.">
               <Button size="sm" variant="destructive" onClick={() => window.location.reload()}>Reset</Button>
