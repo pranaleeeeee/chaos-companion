@@ -8,6 +8,9 @@ import { FaceApparition } from "@/components/chaos/FaceApparition";
 import { InterruptModals } from "@/components/chaos/InterruptModals";
 import { EndingScreen } from "@/components/chaos/EndingScreen";
 import { IntroSequence } from "@/components/chaos/IntroSequence";
+import { FlashlightCursor } from "@/components/chaos/FlashlightCursor";
+import { MusicPunishment } from "@/components/chaos/MusicPunishment";
+import { PowerPointTransitions } from "@/components/chaos/PowerPointTransitions";
 
 const Index = () => {
   const [intro, setIntro] = useState(true);
@@ -53,6 +56,9 @@ const Index = () => {
         <SystemWarnings />
         <FaceApparition />
         <InterruptModals />
+        <FlashlightCursor />
+        <PowerPointTransitions />
+        <MusicPunishment />
         <EndingScreen />
       </main>
     </ChaosProvider>
